@@ -36,7 +36,7 @@ class PlayerAPI extends PluginBase implements Listener{
 		if($event->getPacket() instanceof LoginPacket){
 			$pk = $event->getPacket();
 			$data = $pk->clientData;
-			$this->player[$pk->username] = $data;　//Login時に取ったデータを配列に一時保存
+			$this->player[$pk->username] = $data;//Login時に取ったデータを配列に一時保存
 		}
 	}
 
