@@ -21,7 +21,7 @@ class PlayerAPI extends PluginBase implements Listener{
 		0 => "Maximum"
 		);
 
-	public $player;
+	private $player;
 	
 	private static $instance = null;
 
