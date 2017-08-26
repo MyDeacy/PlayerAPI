@@ -14,13 +14,15 @@ class PlayerAPI extends PluginBase implements Listener{
 	//戻り値の内容を変えたければここをいじってください(わからない方は推奨しません)
 	const OS = array("unknown", "Android", "iOS", "MacOS", "FireOS", "GearVR", "HoloLens", "Windows10", "Windows", "Dedicated", "Orbis", "NX");//実は正しいかは微妙です()
 	const UI = array("Classic", "Pocket");
-	const CONTROL = array("unknown", "keyboard", "Tap", "Controller");
+	const CONTROL = array("unknown", "Keyboard", "Tap", "Controller");
 	const GUI_SIZE = array(
 		-2 => "Minimum",
 		-1 => "Medium",
 		0 => "Maximum"
 		);
 
+	public $player;
+	
 	private static $instance = null;
 
 
@@ -48,6 +50,9 @@ class PlayerAPI extends PluginBase implements Listener{
 
 	 ----------*/
 
+	public static function getInstance(){
+		return self::$instance;
+	}
 
 	public function getOSType($player){
 		return PlayerAPI::OS[$this->player[$player->getName()]["DeviceOS"]];
@@ -65,12 +70,7 @@ class PlayerAPI extends PluginBase implements Listener{
 		return PlayerAPI::GUI_SIZE[$this->player[$player->getName()]["GuiScale"]];	
 	}
 
-	public function getDviceModel($player){
+	public function getDeviceModel($player){
 		return $this->player[$player->getName()]["DeviceModel"];
 	}
-
-	public static function getInstance(){
-		return self::$instance;
-	}
-
 }
