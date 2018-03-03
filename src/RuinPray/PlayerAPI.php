@@ -7,19 +7,18 @@ use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\LoginPacket;
 use pocketmine\Player;
-use pocketmine\command\CommandSender;
 
 class PlayerAPI extends PluginBase implements Listener{
 
-	//戻り値の内容を変えたければここをいじってください(わからない方は推奨しません)
-	const OS = array("unknown", "Android", "iOS", "MacOS", "FireOS", "GearVR", "HoloLens", "Windows10", "Windows", "Dedicated", "Orbis", "NX");//実は正しいかは微妙です()
-	const UI = array("Classic", "Pocket");
-	const CONTROL = array("unknown", "Keyboard", "Tap", "Controller");
-	const GUI_SIZE = array(
+	//戻り値の内容を変えたければ定数をいじってください(わからない方は推奨しません)
+	const OS = ["unknown", "Android", "iOS", "OSX", "FireOS", "GearVR", "HoloLens", "Windows10", "Windows", "Dedicated", "Orbis", "NX"];
+	const UI = ["Classic", "Pocket"];
+	const CONTROL = ["unknown", "Keyboard", "Tap", "Controller"];
+	const GUI_SIZE = [
 		-2 => "Minimum",
 		-1 => "Medium",
 		0 => "Maximum"
-		);
+		];
 
 	private $player = [];
 	
@@ -42,35 +41,44 @@ class PlayerAPI extends PluginBase implements Listener{
 		}
 	}
 
-	/*--------- 
-
-	* ここから関数 (SRCによっては動かないものもあるかも)
-	* 公式とGenisysProで動作確認済みです。
-	* 引数にはPlayerまたはCommandSenderをいれてください。
-
-	 ----------*/
 
 	public static function getInstance(){
 		return self::$instance;
 	}
 
-	public function getOSType($player){
-		return PlayerAPI::OS[$this->player[$player->getName()]["DeviceOS"]];
+	//使用OS
+	public function getOSType(Player $player): String{
+		return self::OS[$this->player[$player->getName()]["DeviceOS"]];
 	}
 
-	public function getUIType($player){
-		return PlayerAPI::UI[$this->player[$player->getName()]["UIProfile"]];
+	//UIのステータス(Pocket or Classic)
+	public function getUIType(Player $player): String{
+		return self::UI[$this->player[$player->getName()]["UIProfile"]];
 	}
 
-	public function getControlType($player){
-		return PlayerAPI::CONTROL[$this->player[$player->getName()]["CurrentInputMode"]];
+	//ゲームの操作 (Tap, Keyboard, Conttoller) まれに誤判定有り(?)
+	public function getControlType(Player $player): String{
+		return self::CONTROL[$this->player[$player->getName()]["CurrentInputMode"]];
 	}
 
-	public function getGUIsize($player){
-		return PlayerAPI::GUI_SIZE[$this->player[$player->getName()]["GuiScale"]];	
+	//GUIのスケール (Maximum > Medium > Minimum)
+	public function getGUIsize(Player $player): String{
+		return self::GUI_SIZE[$this->player[$player->getName()]["GuiScale"]];	
 	}
 
-	public function getDeviceModel($player){
+	//使用機種
+	public function getDeviceModel(Player $player): String{
 		return $this->player[$player->getName()]["DeviceModel"];
 	}
+
+	//Minecraftのバージョン
+	public function getGameVersion(Player $player): String{
+		return $this->player[$player->getName()]["GameVersion"];
+	}
+
+	//使用言語
+	public function getLanguageCode(Player $player): String{
+		$this->player[$player->getName()]["LanguageCode"];
+	}
+
 }
