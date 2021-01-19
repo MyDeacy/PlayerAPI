@@ -11,7 +11,7 @@ use pocketmine\Player;
 class PlayerAPI extends PluginBase implements Listener{
 
 	//戻り値の内容を変えたければ定数をいじってください(わからない方は推奨しません)
-	const OS = ["unknown", "Android", "iOS", "OSX", "FireOS", "GearVR", "HoloLens", "Windows10", "Windows", "Dedicated", "Orbis", "NX"];
+	const OS = ["unknown", "Android", "iOS", "OSX", "FireOS", "GearVR", "HoloLens", "Windows10", "Windows", "Dedicated", "Orbis", "NX", "Switch"];
 	const UI = ["Classic", "Pocket"];
 	const CONTROL = ["unknown", "Keyboard", "Tap", "Controller"];
 	const GUI_SIZE = [
